@@ -1,0 +1,103 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+/* header styling */
+.App-header {
+  background-color: #282c34;
+  height: 8vh;
+  display: flex;
+  /* flex-direction: column; */
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+.App-header > * {
+  padding: 5%;
+}
+
+/* game styling */
+.game-header {
+}
+img {
+  padding: 5%;
+  height: 10vh;
+  width: 7vw;
+  /* border: 1px solid grey; */
+}
+img:hover {
+  border: 1px solid black;
+}
+img:active {
+  box-shadow: 2px 2px 5px #fc894d;
+}
+.images {
+  padding: 1%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.images > * {
+  margin: auto;
+  flex: 1 0 21%;
+}
+/* .App-header {
+  background-color: #282c34;
+  height: 15vh;
+  display: flex;
+  flex-direction: horizontal;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+} */
+
+.headerLink {
+  color: #61dafb;
+  text-decoration: none;
+  display: flex;
+  padding-left: 5%;
+  justify-content: center;
+}
+
+/* highscorelist page */
+/* .leaderBoardEntry {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+} */
+.leaderPage {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.scoreTable {
+  border: 2px solid black;
+  width: 400px;
+}
+
+th {
+  border-bottom: 1px solid black;
+}
+td {
+  text-align: center;
+}
+
+/* info page styling */
+.infoPage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 15%;
+}
