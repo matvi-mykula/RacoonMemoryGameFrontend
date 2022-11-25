@@ -20,7 +20,7 @@ function App(props) {
   // };
 
   const fetchHighScores = async () => {
-    const response = await axios.get('http://localhost:3005/api/scorelist');
+    const response = await axios.get('http://localhost:8080/api/scorelist');
     console.log('this is the high scores', response);
   };
 

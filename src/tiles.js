@@ -19,7 +19,7 @@ import trashRacoon from './icons/trashRacoon.jpeg';
 function MakeTiles(props) {
   //this adds to database
   const postHighScore = async (aName, aScore) => {
-    const response = await axios.post('http://localhost:3005/api/highscores', {
+    const response = await axios.post('http://localhost:8080/api/highscores', {
       aName,
       aScore,
     });
