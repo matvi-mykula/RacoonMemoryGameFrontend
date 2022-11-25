@@ -11,8 +11,12 @@ const RouteSwitch = () => {
   const [name, setName] = useState('');
 
   const fetchHighScores = async () => {
-    const response = await axios.get('http://localhost:8080/api/scorelist');
+    // const response = await axios.get('http://localhost:8080/api/scorelist');
     // trying 8080 port to work with fly.io
+    const response = await axios.get(
+      'https://racoon-memory-game-backend-fly.fly.dev/api/scorelist'
+    );
+
     console.log('this is the high scores', response);
     setTopTen(response.data);
   };
