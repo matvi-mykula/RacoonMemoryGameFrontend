@@ -11,7 +11,8 @@ const RouteSwitch = () => {
   const [name, setName] = useState('');
 
   const fetchHighScores = async () => {
-    const response = await axios.get('http://localhost:3005/api/scorelist');
+    const response = await axios.get('http://localhost:8080/api/scorelist');
+    // trying 8080 port to work with fly.io
     console.log('this is the high scores', response);
     setTopTen(response.data);
   };
