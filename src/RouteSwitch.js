@@ -9,6 +9,7 @@ const RouteSwitch = () => {
   const [show, setShow] = useState(false);
   const [highScore, setHighScore] = useState(0);
   const [name, setName] = useState('');
+  const [elapsedTime, setElapsedTime] = useState(0);
 
   const fetchHighScores = async () => {
     // const response = await axios.get('http://localhost:8080/api/scorelist');
@@ -63,8 +64,8 @@ const RouteSwitch = () => {
                 setHighScore={setHighScore}
                 name={name}
                 setName={setName}
-                // cart={cart}
-                // setCart={setCart}
+                ElapsedTime={elapsedTime}
+                setElapsedTime={setElapsedTime}
               />
             }
           />
@@ -80,8 +81,6 @@ const RouteSwitch = () => {
                 setHighScore={setHighScore}
                 name={name}
                 setName={setName}
-                // cart={cart}
-                // setCart={setCart}
               />
             }
           />

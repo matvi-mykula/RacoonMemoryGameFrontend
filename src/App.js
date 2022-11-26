@@ -69,6 +69,8 @@ function App(props) {
         setHighScore={props.setHighScore}
         topTen={props.topTen}
         setTopTen={props.setTopTen}
+        elapsedTime={props.elapsedTime}
+        setElapsedTime={props.setElapsedTime}
       ></MakeTiles>
 
       {/* <PopUp></PopUp> */}

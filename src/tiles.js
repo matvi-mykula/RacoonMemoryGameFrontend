@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 import scienceRacoon from './icons/scientist.jpeg';
@@ -18,13 +18,16 @@ import trashRacoon from './icons/trashRacoon.jpeg';
 
 function MakeTiles(props) {
   //this adds to database
-  const postHighScore = async (aName, aScore) => {
+
+  // how to make this automatic with a variable??
+  const postHighScore = async (aName, aScore, aTime) => {
     // const response = await axios.post('http://localhost:8080/api/highscores', {
     const response = await axios.post(
       'https://racoon-memory-game-backend-fly.fly.dev/api/highscores',
       {
         aName,
         aScore,
+        aTime,
       }
     );
     console.log({ response });
@@ -56,6 +59,16 @@ function MakeTiles(props) {
   }
 
   const [clickedTracker, setClickedTracker] = useState(initialTrack);
+  const [startTime, setStartTime] = useState(0);
+  const [endTime, setEndTime] = useState(0);
+  // let startTime;
+  // let endTime;
+
+  useEffect(() => {
+    if (clickedTracker.length === 1) {
+      setStartTime(new Date().getTime());
+    }
+  }, [clickedTracker]);
 
   for (let i = 0; i < shuffledTiles.length; i++) {
     tiles.push(
@@ -71,20 +84,25 @@ function MakeTiles(props) {
 
             newTracker[imgDict[shuffledTiles[i]]] = true;
             setClickedTracker(newTracker);
+
             props.setScore(props.score + 1);
             if (props.score > props.highscore) {
               props.setHighScore(props.score);
             }
           } else {
             //create new data, if high score ask for name input/ redirect to highscore page
-
+            // endTime = new Date().getTime();
+            //trying to use useEffect to do this outside of function
             // if no entry yet
+            setEndTime(new Date().getTime());
+            props.setElapsedTime(endTime - startTime);
+
             if (!props.topTen) {
               const playerName = prompt(
                 'Congratulations! You got a great score! Enter your name for the record book!'
               );
               console.log('first score entry');
-              postHighScore(playerName, props.score);
+              postHighScore(playerName, props.score, props.elapsedTime);
             }
             // if top ten isnt full yet
             else if (props.topTen.length < 10) {
@@ -92,14 +110,14 @@ function MakeTiles(props) {
                 'Congratulations! You got a great score! Enter your name for the record book!'
               );
               console.log('filling out the top ten');
-              postHighScore(playerName, props.score);
+              postHighScore(playerName, props.score, props.elapsedTime);
             }
             // if top ten is full and you get a score that isnt good enough
             else if (
               props.score < props.topTen[props.topTen.length - 1].score
             ) {
               console.log('not a top ten score');
-              postHighScore('', props.score);
+              postHighScore('', props.score, props.elapsedTime);
             }
             // if you get a top ten score
             else if (
@@ -110,7 +128,7 @@ function MakeTiles(props) {
                 'Congratulations! You got a great score! Enter your name for the record book!'
               );
               console.log({ playerName });
-              postHighScore(playerName, props.score);
+              postHighScore(playerName, props.score, props.elapsedTime);
             }
 
             props.setScore(0);
