@@ -36,6 +36,8 @@ async function playGame(
 
     const time = endTime - startTime;
     // get name
+    console.log(time);
+    console.log('time should be logged and passed to post');
     const playerName = getName(score, topTenList, time);
     await postHighScore(playerName, score, time);
     console.log('end of game');

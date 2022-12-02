@@ -63,6 +63,7 @@ const ScoreList = (props) => {
 };
 
 function timeFormatter(millis) {
+  console.log({ millis });
   const d = new Date(Date.UTC(0, 0, 0, 0, 0, 0, millis)),
     // Pull out parts of interest
     // d.getUTCHours(),

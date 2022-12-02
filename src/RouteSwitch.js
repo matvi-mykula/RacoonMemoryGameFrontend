@@ -98,11 +98,18 @@ const RouteSwitch = () => {
   );
 };
 
+function figureAPI() {
+  console.log(window.location);
+}
+figureAPI();
+
 const devBackend = 'http://localhost:3005/api/';
 const prodBackend = 'https://racoon-memory-game-backend-fly.fly.dev/api/';
+//some thing is going wrong with time submission when using prodBackend...
+// what could be the issue?????
 
 const postHighScore = async (aName, aScore, aTime) => {
-  const response = await axios.post(prodBackend + 'highscores', {
+  const response = await axios.post(devBackend + 'highscores', {
     aName,
     aScore,
     aTime,
@@ -110,7 +117,7 @@ const postHighScore = async (aName, aScore, aTime) => {
   console.log({ response });
 };
 const fetchHighScores = async () => {
-  const response = await axios.get(prodBackend + 'scorelist');
+  const response = await axios.get(devBackend + 'scorelist');
   console.log('this is the high scores', response);
   return response.data;
 };
