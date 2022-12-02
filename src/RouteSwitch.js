@@ -101,7 +101,7 @@ const RouteSwitch = () => {
 function figureAPI() {
   console.log(window.location);
   console.log(process.env.NODE_ENV);
-  const devBackend = 'http://localhost:3005/api/';
+  const devBackend = 'http://localhost:8080/api/';
   const prodBackend = 'https://racoon-memory-game-backend-fly.fly.dev/api/';
 
   const prodEnv = process.env.NODE_ENV === 'production';
