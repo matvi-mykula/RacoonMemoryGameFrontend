@@ -113,11 +113,12 @@ function figureAPI() {
 
 const environment = figureAPI();
 
-const postHighScore = async (aName, aScore, aTime) => {
+const postHighScore = async (aName, aScore, aTime, aDate) => {
   const response = await axios.post(environment + 'highscores', {
     aName,
     aScore,
     aTime,
+    aDate,
   });
   console.log({ response });
 };
