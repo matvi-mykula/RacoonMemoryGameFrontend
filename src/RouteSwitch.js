@@ -1,32 +1,28 @@
 import { Link, BrowserRouter, Routes, Route } from 'react-router-dom';
 import App from './App.js';
-import ScoreList from './ScoreList';
+import { ScoreList } from './ScoreList';
 import { InfoPage } from './InfoPage';
+import { StopWatch } from './StopWatch';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+
 const RouteSwitch = () => {
   const [topTen, setTopTen] = useState([]);
   const [show, setShow] = useState(false);
   const [highScore, setHighScore] = useState(0);
   const [name, setName] = useState('');
   const [elapsedTime, setElapsedTime] = useState(0);
+  const [isActive, setIsActive] = useState(false);
 
-  const fetchHighScores = async () => {
-    // const response = await axios.get('http://localhost:8080/api/scorelist');
-    // trying 8080 port to work with fly.io
-    const response = await axios.get(
-      'https://racoon-memory-game-backend-fly.fly.dev/api/scorelist'
-    );
+  async function wrapperFunction() {
+    const response = await fetchHighScores();
+    setTopTen(response);
+  }
 
-    console.log('this is the high scores', response);
-    setTopTen(response.data);
-  };
-
-  let data;
   useEffect(() => {
-    fetchHighScores();
+    wrapperFunction();
   }, []);
-  console.log({ topTen });
+  // console.log({ topTen });
 
   return (
     <div>
@@ -50,6 +46,12 @@ const RouteSwitch = () => {
           >
             Info
           </Link>
+          <StopWatch
+            isActive={isActive}
+            setIsActive={setIsActive}
+            elapsedTime={elapsedTime}
+            setElapsedTime={setElapsedTime}
+          ></StopWatch>
         </header>
         <Routes>
           <Route
@@ -64,8 +66,10 @@ const RouteSwitch = () => {
                 setHighScore={setHighScore}
                 name={name}
                 setName={setName}
-                ElapsedTime={elapsedTime}
+                elapsedTime={elapsedTime}
                 setElapsedTime={setElapsedTime}
+                isActive={isActive}
+                setIsActive={setIsActive}
               />
             }
           />
@@ -94,4 +98,32 @@ const RouteSwitch = () => {
   );
 };
 
-export { RouteSwitch };
+const devBackend = 'http://localhost:3005/api/';
+const prodBackend = 'https://racoon-memory-game-backend-fly.fly.dev/api/';
+
+const postHighScore = async (aName, aScore, aTime) => {
+  const response = await axios.post(devBackend + 'highscores', {
+    aName,
+    aScore,
+    aTime,
+  });
+  console.log({ response });
+};
+const fetchHighScores = async () => {
+  const response = await axios.get(devBackend + 'scorelist');
+  console.log('this is the high scores', response);
+  return response.data;
+};
+
+export { RouteSwitch, postHighScore, fetchHighScores };
+
+// const fetchHighScores = async () => {
+//   // const response = await axios.get('http://localhost:8080/api/scorelist');
+//   // trying 8080 port to work with fly.io
+//   const response = await axios.get(
+//     'https://racoon-memory-game-backend-fly.fly.dev/api/scorelist'
+//   );
+
+//   console.log('this is the high scores', response);
+//   setTopTen(response.data);
+// };

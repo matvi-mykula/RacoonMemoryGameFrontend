@@ -1,5 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
+import { postHighScore } from './RouteSwitch';
+import { StopWatch } from './StopWatch';
+import { playGame } from './PlayGame';
 
 import scienceRacoon from './icons/scientist.jpeg';
 import cookieRacoon from './icons/eatingCookie.jpeg';
@@ -17,21 +20,6 @@ import rainbowVomit from './icons/rainbowVomit.jpeg';
 import trashRacoon from './icons/trashRacoon.jpeg';
 
 function MakeTiles(props) {
-  //this adds to database
-
-  // how to make this automatic with a variable??
-  const postHighScore = async (aName, aScore, aTime) => {
-    // const response = await axios.post('http://localhost:8080/api/highscores', {
-    const response = await axios.post(
-      'https://racoon-memory-game-backend-fly.fly.dev/api/highscores',
-      {
-        aName,
-        aScore,
-        aTime,
-      }
-    );
-    console.log({ response });
-  };
   const imgDict = {
     [scienceRacoon]: 0,
     [cookieRacoon]: 1,
@@ -48,7 +36,6 @@ function MakeTiles(props) {
     [rainbowVomit]: 12,
     [trashRacoon]: 13,
   };
-  // top possible score condition
 
   const shuffledTiles = shuffle(Object.keys(imgDict));
 
@@ -59,94 +46,39 @@ function MakeTiles(props) {
   }
 
   const [clickedTracker, setClickedTracker] = useState(initialTrack);
-  const [startTime, setStartTime] = useState(0);
-  const [endTime, setEndTime] = useState(0);
-  // let startTime;
-  // let endTime;
 
-  useEffect(() => {
-    if (clickedTracker.length === 1) {
-      setStartTime(new Date().getTime());
-    }
-  }, [clickedTracker]);
+  let endTime = 0;
 
   for (let i = 0; i < shuffledTiles.length; i++) {
     tiles.push(
       <img
         src={shuffledTiles[i]}
         alt=""
-        id={shuffledTiles[i]}
+        key={shuffledTiles[i]}
         className="image"
-        onClick={() => {
-          if (!clickedTracker[imgDict[shuffledTiles[i]]]) {
-            //put new highscore name in here
-            let newTracker = clickedTracker;
+        onClick={async () => {
+          //might need to be regular function
+          //if so return array of [score, highscore, isActive] after posting then set states
+          let turnResults = await playGame(
+            clickedTracker,
+            clickedTracker[imgDict[shuffledTiles[i]]], //true or false
+            props.topTen,
+            props.score,
+            props.highScore,
+            props.isActive,
+            props.startTime,
+            endTime
+          );
 
-            newTracker[imgDict[shuffledTiles[i]]] = true;
-            setClickedTracker(newTracker);
-
-            props.setScore(props.score + 1);
-            if (props.score > props.highscore) {
-              props.setHighScore(props.score);
-            }
-          } else {
-            //create new data, if high score ask for name input/ redirect to highscore page
-            // endTime = new Date().getTime();
-            //trying to use useEffect to do this outside of function
-            // if no entry yet
-            setEndTime(new Date().getTime());
-            props.setElapsedTime(endTime - startTime);
-
-            if (!props.topTen) {
-              const playerName = prompt(
-                'Congratulations! You got a great score! Enter your name for the record book!'
-              );
-              console.log('first score entry');
-              postHighScore(playerName, props.score, props.elapsedTime);
-            }
-            // if top ten isnt full yet
-            else if (props.topTen.length < 10) {
-              const playerName = prompt(
-                'Congratulations! You got a great score! Enter your name for the record book!'
-              );
-              console.log('filling out the top ten');
-              postHighScore(playerName, props.score, props.elapsedTime);
-            }
-            // if top ten is full and you get a score that isnt good enough
-            else if (
-              props.score < props.topTen[props.topTen.length - 1].score
-            ) {
-              console.log('not a top ten score');
-              postHighScore('', props.score, props.elapsedTime);
-            }
-            // if you get a top ten score
-            else if (
-              props.score > props.topTen[props.topTen.length - 1].score
-            ) {
-              console.log('a top ten score');
-              const playerName = prompt(
-                'Congratulations! You got a great score! Enter your name for the record book!'
-              );
-              console.log({ playerName });
-              postHighScore(playerName, props.score, props.elapsedTime);
-            }
-
-            props.setScore(0);
-            setClickedTracker(initialTrack);
-          }
+          console.log({ turnResults });
+          let newTracker = clickedTracker;
+          newTracker[imgDict[shuffledTiles[i]]] = true;
+          setClickedTracker(newTracker);
+          props.setScore(props.score + 1);
+          props.setStartTime(turnResults['startTime']);
+          props.setIsActive(turnResults['isActive']);
         }}
-      />
-    );
-  }
-  if (props.score === Object.keys(imgDict).length) {
-    return (
-      <div>
-        <br />
-        <p>
-          {' '}
-          <em> That is the Top Possible Score! Congrats!</em>{' '}
-        </p>
-      </div>
+      ></img>
     );
   }
   return <div className="images">{tiles}</div>;
@@ -172,4 +104,5 @@ function shuffle(oldArray) {
 
   return array;
 }
+
 export { MakeTiles };

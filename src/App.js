@@ -1,15 +1,12 @@
 import './App.css';
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-
+// import { fetchHighScores } from './RouteSwitch';
 import { MakeTiles } from './tiles.js';
-// import { PopUp } from './Components/newName.js';
-import axios from 'axios';
 
 function App(props) {
   const [score, setScore] = useState(0);
-  const navigate = useNavigate();
-  console.log({ score });
+  const [startTime, setStartTime] = useState(0);
+  // console.log({ score });
 
   // const postHighScore = async () => {
   //   const response = await axios.post('http://localhost:3005/api/highscores', {
@@ -19,34 +16,20 @@ function App(props) {
   //   console.log({ response });
   // };
 
-  const fetchHighScores = async () => {
-    // const response = await axios.get('http://localhost:8080/api/scorelist');
-    const response = await axios.get(
-      'https://racoon-memory-game-backend-fly.fly.dev/api/scorelist'
-    );
+  // const fetchHighScores = async () => {
+  //   // const response = await axios.get('http://localhost:8080/api/scorelist');
+  //   const response = await axios.get(
+  //     'https://racoon-memory-game-backend-fly.fly.dev/api/scorelist'
+  //   );
 
-    console.log('this is the high scores', response);
-  };
+  //   console.log('this is the high scores', response);
+  // };
 
   useEffect(() => {
     if (score > props.highScore) {
       props.setHighScore(score);
     }
   }, [score]);
-
-  // useEffect(() => {
-  //   if (props.topTen.length < 10) {
-  //     // navigate('/scorelist');
-  //   } else {
-  //     if (props.highScore > props.topTen[9].score && score > 0) {
-  //       //generate form and user input herelet
-  //       // navigate('/scorelist');
-  //     }
-  //   }
-
-  //   console.log('score changed');
-  //   // postHighScore();
-  // }, [props.highScore]);
 
   return (
     <div className="App">
@@ -69,21 +52,13 @@ function App(props) {
         setHighScore={props.setHighScore}
         topTen={props.topTen}
         setTopTen={props.setTopTen}
-        elapsedTime={props.elapsedTime}
-        setElapsedTime={props.setElapsedTime}
+        startTime={startTime}
+        setStartTime={setStartTime}
+        isActive={props.isActive}
+        setIsActive={props.setIsActive}
       ></MakeTiles>
-
-      {/* <PopUp></PopUp> */}
     </div>
   );
 }
-
-// function HandleSubmit(props) {
-//   if (!props.show) {
-//     props.setShow(true);
-//   }
-//   const navigate = useNavigate();
-//   navigate('/scorelist');
-// }
 
 export default App;
