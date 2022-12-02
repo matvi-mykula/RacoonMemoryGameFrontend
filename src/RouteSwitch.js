@@ -100,6 +100,7 @@ const RouteSwitch = () => {
 
 function figureAPI() {
   console.log(window.location);
+  console.log(process.env.NODE_ENV);
 }
 figureAPI();
 
