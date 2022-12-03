@@ -128,7 +128,7 @@ function figureAPI() {
 // what could be the issue?????
 // const environment = figureAPI();
 
-const environment = 'https:://purple-firefly-886.fly.dev';
+const environment = 'https:://purple-firefly-886.fly.dev/';
 console.log({ environment });
 
 const postHighScore = async (aName, aScore, aTime, aDate) => {
