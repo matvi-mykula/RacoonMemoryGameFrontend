@@ -114,7 +114,7 @@ function figureAPI() {
   console.log(process.env.NODE_ENV);
   const devBackend = 'http://localhost:8080/api/';
   // const prodBackend = 'https://racoon-memory-game-backend-fly.fly.dev/api/';
-  const prodBackend = 'http:://purple-firefly-886.fly.dev/api/';
+  const prodBackend = 'https:://purple-firefly-886.fly.dev/api/';
 
   console.log({ prodBackend });
   const prodEnv = process.env.NODE_ENV === 'production';
