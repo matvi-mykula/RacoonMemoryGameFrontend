@@ -1,4 +1,5 @@
 import { postHighScore } from './RouteSwitch';
+import { timeFormatter } from './ScoreList';
 
 //what are inputs??
 // current highscore list, image list, image clicked
@@ -20,6 +21,8 @@ async function playGame(
   endTime
 ) {
   console.log({ clickedTracker });
+  console.log(clickedTracker.length);
+  console.log(count(clickedTracker, true));
   console.log({ imgClickedBoolean });
   if (count(clickedTracker, true) === 0) {
     startTime = Date.now();
@@ -41,6 +44,7 @@ async function playGame(
     const playerName = getName(score, topTenList, time);
     await postHighScore(playerName, score, time, new Date());
     console.log('end of game');
+    score = 0;
   } //update everything and continue
   else {
     score += 1;
@@ -48,6 +52,17 @@ async function playGame(
       highScore = score;
     }
     console.log('score ' + score);
+    //highest possible score condition
+    if (score === clickedTracker.length) {
+      console.log('highest possible score');
+      isActive = false;
+      endTime = Date.now();
+      const time = endTime - startTime;
+      const playerName = getName(score, topTenList, time);
+      await postHighScore(playerName, score, time, new Date());
+      console.log('end of game');
+      score = 0;
+    }
   }
 
   //   clickedTracker update
@@ -70,7 +85,7 @@ function getName(endScore, topTenList, atime) {
       'Congratulations! You got a score of ' +
         endScore +
         ' in ' +
-        atime +
+        timeFormatter(atime) +
         '! Enter your name for the record book!'
     );
   }
@@ -80,7 +95,7 @@ function getName(endScore, topTenList, atime) {
       'Congratulations! You got a score  of ' +
         endScore +
         ' in ' +
-        atime +
+        timeFormatter(atime) +
         '! Enter your name for the record book!'
     );
   }
@@ -95,7 +110,7 @@ function getName(endScore, topTenList, atime) {
       'Congratulations! You got a score  of ' +
         endScore +
         ' in ' +
-        atime +
+        timeFormatter(atime) +
         '! Enter your name for the record book!'
     );
   }
@@ -112,4 +127,4 @@ function count(list, value) {
   return counter;
 }
 
-export { playGame };
+export { playGame, count };

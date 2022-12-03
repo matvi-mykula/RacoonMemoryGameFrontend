@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { postHighScore } from './RouteSwitch';
 import { StopWatch } from './StopWatch';
-import { playGame } from './PlayGame';
+import { playGame, count } from './PlayGame';
 
 import scienceRacoon from './icons/scientist.jpeg';
 import cookieRacoon from './icons/eatingCookie.jpeg';
@@ -49,6 +49,12 @@ function MakeTiles(props) {
 
   let endTime = 0;
 
+  useEffect(() => {
+    if (!props.isActive) {
+      setClickedTracker(initialTrack);
+    }
+  }, [props.isActive]);
+
   for (let i = 0; i < shuffledTiles.length; i++) {
     tiles.push(
       <img
@@ -74,9 +80,12 @@ function MakeTiles(props) {
           let newTracker = clickedTracker;
           newTracker[imgDict[shuffledTiles[i]]] = true;
           setClickedTracker(newTracker);
-          props.setScore(props.score + 1);
+          props.setScore(turnResults['score']);
           props.setStartTime(turnResults['startTime']);
           props.setIsActive(turnResults['isActive']);
+
+          if (count(clickedTracker, true) === clickedTracker.length) {
+          }
         }}
       ></img>
     );

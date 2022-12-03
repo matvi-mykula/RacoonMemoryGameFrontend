@@ -26,10 +26,10 @@ const ScoreList = (props) => {
 
   useEffect(() => {
     wrapperFunction(); // contains fetchHighScores
-    console.log('top ten');
-    console.log(props.topTen);
+    // console.log('top ten');
+    // console.log(props.topTen);
   }, []);
-  console.log(props.topTen);
+  // console.log(props.topTen);
   return (
     <div className="leaderPage">
       <h1>HighScore List</h1>
@@ -46,7 +46,7 @@ const ScoreList = (props) => {
           <tbody>
             {[...props.topTen].map((x, i) => {
               return (
-                <tr>
+                <tr key={props.topTen[i]._id}>
                   <td>{i + 1}</td>
                   <td>{props.topTen[i].name}</td>
                   <td>{props.topTen[i].score}</td>
@@ -63,7 +63,7 @@ const ScoreList = (props) => {
 };
 
 function timeFormatter(millis) {
-  console.log({ millis });
+  // console.log({ millis });
   const d = new Date(Date.UTC(0, 0, 0, 0, 0, 0, millis)),
     // Pull out parts of interest
     // d.getUTCHours(),

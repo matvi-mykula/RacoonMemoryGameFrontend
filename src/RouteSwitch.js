@@ -3,6 +3,7 @@ import App from './App.js';
 import { ScoreList } from './ScoreList';
 import { InfoPage } from './InfoPage';
 import { StopWatch } from './StopWatch';
+import { LineChart } from './DataScience';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
@@ -45,6 +46,12 @@ const RouteSwitch = () => {
             className="headerLink"
           >
             Info
+          </Link>
+          <Link
+            to={'/statistics'}
+            className="headerLink"
+          >
+            Statistics
           </Link>
           <StopWatch
             isActive={isActive}
@@ -92,6 +99,10 @@ const RouteSwitch = () => {
             path="/info"
             element={<InfoPage></InfoPage>}
           />
+          <Route
+            path="/statistics"
+            element={<LineChart></LineChart>}
+          />
         </Routes>
       </BrowserRouter>
     </div>
@@ -128,4 +139,9 @@ const fetchHighScores = async () => {
   return response.data;
 };
 
-export { RouteSwitch, postHighScore, fetchHighScores };
+const fetchAllScores = async () => {
+  const response = await axios.get(environment + 'statistics');
+  return response.data;
+};
+
+export { RouteSwitch, postHighScore, fetchHighScores, fetchAllScores };
