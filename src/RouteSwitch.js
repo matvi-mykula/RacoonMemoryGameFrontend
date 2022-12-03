@@ -113,16 +113,22 @@ function figureAPI() {
   console.log(window.location);
   console.log(process.env.NODE_ENV);
   const devBackend = 'http://localhost:8080/api/';
-  const prodBackend = 'https://racoon-memory-game-backend-fly.fly.dev/api/';
+  // const prodBackend = 'https://racoon-memory-game-backend-fly.fly.dev/api/';
+  const prodBackend = 'https:://purple-firefly-886.fly.dev';
 
+  console.log({ prodBackend });
   const prodEnv = process.env.NODE_ENV === 'production';
-  return prodEnv ? prodBackend : devBackend;
+  console.log(prodEnv);
+  let environment;
+  prodEnv ? (environment = prodBackend) : (environment = devBackend);
+  return environment;
 }
 
 //some thing is going wrong with time submission when using prodBackend...
 // what could be the issue?????
 
 const environment = figureAPI();
+console.log({ environment });
 
 const postHighScore = async (aName, aScore, aTime, aDate) => {
   const response = await axios.post(environment + 'highscores', {
