@@ -114,7 +114,7 @@ function figureAPI() {
   console.log(process.env.NODE_ENV);
   const devBackend = 'http://localhost:8080/api/';
   // const prodBackend = 'https://racoon-memory-game-backend-fly.fly.dev/api/';
-  const prodBackend = 'https:://purple-firefly-886.fly.dev';
+  const prodBackend = 'https:://purple-firefly-886.fly.dev/api/';
 
   console.log({ prodBackend });
   const prodEnv = process.env.NODE_ENV === 'production';
@@ -126,9 +126,9 @@ function figureAPI() {
 
 //some thing is going wrong with time submission when using prodBackend...
 // what could be the issue?????
-// const environment = figureAPI();
+const environment = figureAPI();
 
-const environment = 'purple-firefly-886.fly.dev/';
+// const environment = 'purple-firefly-886.fly.dev/api/';
 console.log({ environment });
 
 const postHighScore = async (aName, aScore, aTime, aDate) => {
