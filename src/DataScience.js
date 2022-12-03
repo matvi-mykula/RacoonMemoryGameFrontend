@@ -166,7 +166,7 @@ function LineChart() {
 
   async function wrapperFunction() {
     const aResponse = await fetchAllScores();
-    console.log(aResponse);
+    // console.log(aResponse);
     response = aResponse;
     let dataPoints = [];
     for (let i = 0; i < response.length; i++) {

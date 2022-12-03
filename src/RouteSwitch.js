@@ -126,8 +126,9 @@ function figureAPI() {
 
 //some thing is going wrong with time submission when using prodBackend...
 // what could be the issue?????
+// const environment = figureAPI();
 
-const environment = figureAPI();
+const environment = 'https:://purple-firefly-886.fly.dev';
 console.log({ environment });
 
 const postHighScore = async (aName, aScore, aTime, aDate) => {
