@@ -9,8 +9,8 @@ function getIP() {
   //creating function to load ip address from the API
   const getData = async () => {
     const res = await axios.get('https://geolocation-db.com/json/');
-    console.log(res.data);
-    const userIP = res.data.IPv4;
+    // console.log(res.data);
+    const userIP = res.data;
     return userIP;
   };
 
