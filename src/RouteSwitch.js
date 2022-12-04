@@ -6,6 +6,7 @@ import { StopWatch } from './StopWatch';
 import { LineChart } from './DataScience';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { getIP } from './getIP.js';
 
 const RouteSwitch = () => {
   const [topTen, setTopTen] = useState([]);
@@ -132,11 +133,17 @@ const environment = figureAPI();
 console.log({ environment });
 
 const postHighScore = async (aName, aScore, aTime, aDate) => {
+  if (!aName) {
+    aName = 'NoName';
+  }
+  const userIP = getIP();
+  console.log(userIP);
   const response = await axios.post(environment + 'highscores', {
     aName,
     aScore,
     aTime,
     aDate,
+    userIP,
   });
   console.log({ response });
 };
