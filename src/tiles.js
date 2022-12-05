@@ -114,4 +114,36 @@ function shuffle(oldArray) {
   return array;
 }
 
-export { MakeTiles };
+//mayb emake a whole seperate tiles component and try to break it???
+function NightMareMode() {
+  const imgDict = {
+    [scienceRacoon]: 0,
+    [cookieRacoon]: 1,
+    [dancingRacoon]: 2,
+    [appleRacoon]: 3,
+    [loverRacoon]: 4,
+    [streetwearRacoon]: 5,
+    [cleaningRacoon]: 6,
+    [moneyBagRacoon]: 7,
+    [suitRacoon]: 8,
+    [chipRacoon]: 9,
+    [drinkingRacoon]: 10,
+    [grumpyRacoon]: 11,
+    [rainbowVomit]: 12,
+    [trashRacoon]: 13,
+  };
+
+  const shuffledTiles = shuffle(Object.keys(imgDict));
+
+  const tiles = [];
+  const initialTrack = [];
+  for (let i = 0; i < Object.keys(imgDict).length; i++) {
+    initialTrack.push(false);
+  }
+
+  while (true) {
+    return <div className="images">{tiles}</div>;
+  }
+}
+
+export { MakeTiles, NightMareMode };

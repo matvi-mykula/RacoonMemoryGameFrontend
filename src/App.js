@@ -1,7 +1,7 @@
 import './App.css';
 import React, { useState, useEffect } from 'react';
 // import { fetchHighScores } from './RouteSwitch';
-import { MakeTiles } from './tiles.js';
+import { MakeTiles, NightMareMode } from './tiles.js';
 
 function App(props) {
   const [score, setScore] = useState(0);
@@ -24,6 +24,7 @@ function App(props) {
 
   //   console.log('this is the high scores', response);
   // };
+  const [nightmare, setNightmare] = useState(false);
 
   useEffect(() => {
     if (score > props.highScore) {
@@ -34,7 +35,7 @@ function App(props) {
   return (
     <div className="App">
       <header className="game-header">
-        <p>Memory Game </p>
+        <p className="appTitle"> Racoon Memory Game </p>
         <div className="scores">
           <p>Current Score: {score} </p>
 
@@ -45,6 +46,22 @@ function App(props) {
       <div className="explanation">
         <p>Click a Racoon that you have not clicked yet!</p>
       </div>
+      {/* {nightmare ? (
+        <NightMareMode></NightMareMode>
+      ) : (
+        <MakeTiles
+          score={score}
+          setScore={setScore}
+          highScore={props.highScore}
+          setHighScore={props.setHighScore}
+          topTen={props.topTen}
+          setTopTen={props.setTopTen}
+          startTime={startTime}
+          setStartTime={setStartTime}
+          isActive={props.isActive}
+          setIsActive={props.setIsActive}
+        ></MakeTiles>
+      )} */}
       <MakeTiles
         score={score}
         setScore={setScore}
@@ -57,6 +74,11 @@ function App(props) {
         isActive={props.isActive}
         setIsActive={props.setIsActive}
       ></MakeTiles>
+
+      {/* <div>
+        <p>! Do not click !</p>
+        <button onClick={() => setNightmare(!nightmare)}>NightMareMode</button>
+      </div> */}
     </div>
   );
 }
