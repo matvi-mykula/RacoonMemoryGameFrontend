@@ -59,7 +59,9 @@ async function playGame(
       endTime = Date.now();
       const time = endTime - startTime;
       const playerName = getName(score, topTenList, time);
-      await postHighScore(playerName, score, time, new Date());
+      if (score > 0) {
+        await postHighScore(playerName, score, time, new Date());
+      }
       console.log('end of game');
       score = 0;
     }
